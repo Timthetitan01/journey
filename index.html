@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Journey Pro — Full-Stack Swift Roadmap</title>
+<meta name="description" content="Black & white, smooth, extensive roadmap to become a hire-ready full-stack Swift developer by 18." />
+<style>
+  :root{
+    --bg:#0a0a0a;          /* deep black */
+    --panel:#111;          /* panel black */
+    --panel-2:#161616;     /* layered panel */
+    --text:#f5f5f5;        /* near white */
+    --muted:#bdbdbd;       /* gray text */
+    --line:#262626;        /* hairline */
+    --accent:#ffffff;      /* pure white accent */
+    --radius:16px;
+    --shadow:0 1px 0 rgba(255,255,255,0.04) inset, 0 10px 25px rgba(0,0,0,0.6);
+    --speed:280ms;
+    --ease:cubic-bezier(.2,.7,.2,1);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font:14px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Inter, "SF Pro", Arial, sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(1000px 600px at 15% -10%, #111 0%, #0a0a0a 60%, #000 100%),
+      linear-gradient(#0a0a0a,#000);
+    background-attachment: fixed;
+    letter-spacing:.1px;
+  }
+
+  .wrap{ max-width:1100px; margin:0 auto; padding:28px 18px 80px; }
+
+  header.app{
+    position:sticky; top:0; z-index:10;
+    backdrop-filter:saturate(140%) blur(12px);
+    background:linear-gradient(180deg, rgba(10,10,10,.85), rgba(10,10,10,.55) 60%, rgba(10,10,10,0));
+    border-bottom:1px solid var(--line);
+  }
+  header.app .inner{max-width:1100px; margin:0 auto; padding:18px}
+  .brand{ display:flex; align-items:center; gap:14px; user-select:none; animation:fadeIn .8s var(--ease) both; }
+  .logo{
+    width:34px; height:34px; border-radius:12px;
+    background:linear-gradient(145deg,#121212,#0c0c0c);
+    box-shadow: 0 0 0 1px var(--line) inset, 0 12px 30px rgba(0,0,0,.6);
+    position:relative; overflow:hidden;
+  }
+  .logo::before{
+    content:""; position:absolute; inset:0;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.08), transparent 40%),
+      radial-gradient(120px 22px at 50% -10%, rgba(255,255,255,.25), rgba(255,255,255,0));
+    mix-blend-mode:screen;
+  }
+  .title{font-weight:650; font-size:18px; letter-spacing:.3px}
+  .subtitle{color:var(--muted); font-size:12px}
+
+  .toolbar{ margin-top:14px; display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+  .progress{ flex:1 1 320px; display:flex; align-items:center; gap:12px; }
+  .bar{
+    position:relative; height:10px; border-radius:999px; overflow:hidden;
+    background:linear-gradient(180deg,#0f0f0f,#0b0b0b);
+    box-shadow:var(--shadow), 0 0 0 1px var(--line) inset; flex:1;
+  }
+  .bar .fill{
+    height:100%; width:0%;
+    background:linear-gradient(180deg, #fff, #bdbdbd);
+    box-shadow: 0 8px 24px rgba(255,255,255,.08);
+    transform-origin:left center;
+    transition:width var(--speed) var(--ease), transform var(--speed) var(--ease);
+  }
+  .percent{min-width:64px; text-align:right; color:#eaeaea; font-variant-numeric:tabular-nums}
+
+  .btn{
+    appearance:none; border:1px solid var(--line);
+    background:linear-gradient(180deg,#111,#0b0b0b);
+    color:var(--text);
+    padding:10px 14px; border-radius:12px;
+    box-shadow:var(--shadow);
+    cursor:pointer; transition:transform var(--speed) var(--ease), border-color var(--speed) var(--ease), background var(--speed) var(--ease);
+  }
+  .btn:hover{transform:translateY(-1px)}
+  .btn:active{transform:translateY(0)}
+  .btn.ghost{background:transparent}
+  .spacer{flex:1}
+
+  .tabs{ margin:18px 0 8px; display:flex; gap:8px; flex-wrap:wrap; }
+  .tab{
+    padding:10px 12px; border-radius:999px; border:1px solid var(--line);
+    background:linear-gradient(180deg,#121212,#0d0d0d);
+    color:var(--muted);
+    cursor:pointer; transition:all var(--speed) var(--ease); user-select:none;
+  }
+  .tab.active{
+    color:#000;
+    background:linear-gradient(180deg,#fff,#cfcfcf);
+    box-shadow:0 8px 24px rgba(255,255,255,.12), 0 0 0 1px rgba(255,255,255,.3) inset;
+  }
+
+  .panel{
+    border:1px solid var(--line);
+    background:linear-gradient(180deg,#0f0f0f,#0b0b0b);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    animation:rise .7s var(--ease) both;
+  }
+  .grid{ display:grid; gap:12px; grid-template-columns:repeat(12,1fr); }
+  .cards{ padding:14px }
+  .card{
+    grid-column:span 12;
+    border:1px solid var(--line);
+    background:linear-gradient(180deg,#111,#0d0d0d);
+    border-radius:14px; padding:14px;
+    display:grid; grid-template-columns:auto 1fr auto; gap:12px; align-items:center;
+    transition:border-color var(--speed) var(--ease), transform var(--speed) var(--ease), background var(--speed) var(--ease);
+    position:relative;
+  }
+  .card:hover{ transform:translateY(-1px); border-color:#2d2d2d }
+  .check{
+    width:22px; height:22px; border-radius:6px; display:grid; place-items:center;
+    border:1px solid var(--line); background:#0e0e0e; cursor:pointer;
+    transition:all var(--speed) var(--ease);
+  }
+  .check[data-checked="true"]{
+    background:linear-gradient(180deg,#fff,#dcdcdc);
+    color:#000; border-color:#cfcfcf; box-shadow:0 6px 16px rgba(255,255,255,.12);
+  }
+  .meta{ display:flex; flex-direction:column; gap:2px }
+  .label{ font-weight:600 }
+  .sub{ color:var(--muted); font-size:12px }
+  .pill{
+    border:1px solid var(--line);
+    padding:6px 10px; border-radius:999px; color:#e8e8e8;
+    background:linear-gradient(180deg,#121212,#0c0c0c);
+    font-size:12px; cursor:pointer;
+  }
+  .more{
+    grid-column:1 / -1;
+    border-top:1px dashed #1f1f1f; margin-top:12px; padding-top:12px;
+    display:none; color:#ddd;
+  }
+  .links{ display:flex; gap:8px; flex-wrap:wrap; margin-top:8px }
+  .link{
+    border:1px solid var(--line);
+    background:linear-gradient(180deg,#121212,#0c0c0c);
+    color:#fff; text-decoration:none; padding:8px 10px; border-radius:10px; font-size:12px;
+    transition:transform var(--speed) var(--ease), border-color var(--speed) var(--ease);
+  }
+  .link:hover{ transform:translateY(-1px); border-color:#2b2b2b }
+
+  .searchbar{
+    display:flex; gap:10px; align-items:center; padding:12px; border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg,#0f0f0f,#0b0b0b);
+  }
+  .input{
+    flex:1; border:1px solid var(--line); background:#0d0d0d; color:#fff;
+    border-radius:12px; padding:10px 12px;
+    outline:none; transition:border-color var(--speed) var(--ease), background var(--speed) var(--ease);
+  }
+  .input:focus{ border-color:#2a2a2a; background:#101010 }
+
+  footer{ margin-top:22px; color:var(--muted); font-size:12px; text-align:center; animation:fadeIn .9s var(--ease) both; }
+
+  @keyframes fadeIn{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+  @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  .slideIn{animation:fadeIn .45s var(--ease) both}
+  .pulse{ animation:pulse 1200ms var(--ease) 1; }
+  @keyframes pulse{ 0%{transform:scaleX(1)} 40%{transform:scaleX(1.02)} 100%{transform:scaleX(1)} }
+
+  @media (min-width:720px){ .card{grid-template-columns:auto 1fr auto} }
+  @media (min-width:860px){ .card{grid-template-columns:auto 1fr auto} }
+</style>
+</head>
+<body>
+<header class="app">
+  <div class="inner">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div>
+        <div class="title">Journey Pro</div>
+        <div class="subtitle">Black-and-white roadmap to a hire-ready full-stack Swift role by 18</div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <div class="progress" aria-live="polite">
+        <div class="bar" aria-label="Overall progress">
+          <div class="fill" id="progressFill"></div>
+        </div>
+        <div class="percent" id="progressPercent">0%</div>
+      </div>
+      <button class="btn ghost" id="expandAllBtn" title="Expand all details">Expand all</button>
+      <button class="btn" id="resetBtn" title="Reset progress (local)">Reset</button>
+      <span class="spacer"></span>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Years">
+      <div class="tab active" role="tab" aria-selected="true" tabindex="0" data-year="16">Year 16</div>
+      <div class="tab" role="tab" aria-selected="false" tabindex="0" data-year="17">Year 17</div>
+      <div class="tab" role="tab" aria-selected="false" tabindex="0" data-year="18">Year 18</div>
+      <div class="tab" role="tab" aria-selected="false" tabindex="0" data-year="all">All</div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="panel">
+    <div class="searchbar">
+      <input class="input" id="search" placeholder="Search tasks, courses, tools… (e.g. CS50, Firebase, TCA, Instruments)" />
+      <button class="btn" id="clearSearch">Clear</button>
+    </div>
+    <div class="cards grid" id="cards"></div>
+  </section>
+
+  <footer>
+    <div>“Consistency beats talent when talent isn’t consistent.”</div>
+    <div id="saveStatus" aria-live="polite" style="margin-top:6px;">Saved locally</div>
+  </footer>
+</main>
+
+<script>
+/* -------------------------------------------
+   Journey Pro — Extensive Roadmap (Black/White)
+   - Same look & interactions
+   - Many more tasks with laser focus on hiring signals
+   - Progress persists in localStorage
+-------------------------------------------- */
+
+const ROADMAP = [
+  /* =========================
+     YEAR 16 — Core Foundation
+     ========================= */
+  {id:"y16-swiftui-100days",year:16,title:"Swift & SwiftUI — 100 Days (project-based)",category:"SwiftUI",
+    details:"End-to-end fundamentals by building many small apps and features.",
+    links:[{label:"Hacking with Swift — 100 Days of SwiftUI",url:"https://www.hackingwithswift.com/100/swiftui"},
+           {label:"Apple — SwiftUI Tutorials",url:"https://developer.apple.com/tutorials/swiftui"}],
+    tools:["Xcode","Swift Package Manager"],notes:"Hiring signal: shows shipping velocity & UI fundamentals."},
+
+  {id:"y16-cs50",year:16,title:"Computer Science Basics (CS50)",category:"CS Fundamentals",
+    details:"Learn problem-solving, algorithms, and memory/array thinking.",
+    links:[{label:"Harvard CS50 (free)",url:"https://cs50.harvard.edu/x/"}],
+    tools:["C","Python","Algorithms"],notes:"Hiring signal: algorithmic clarity & debugging maturity."},
+
+  {id:"y16-leetcode-easy-50",year:16,title:"LeetCode: 50 Easy problems",category:"Interview Prep",
+    details:"Build rhythm and pattern recognition with classic DS/Algo problems.",
+    links:[{label:"LeetCode Easy set",url:"https://leetcode.com/problemset/all/?difficulty=EASY"}],
+    tools:["Arrays","HashMaps","Two Pointers"],notes:"Aim 3–5 per week; write explanations in notes."},
+
+  {id:"y16-uikit-basics",year:16,title:"UIKit basics alongside SwiftUI",category:"iOS",
+    details:"Understand view controllers, navigation stack, and interoperability.",
+    links:[{label:"Apple — UIKit",url:"https://developer.apple.com/documentation/uikit/"}],
+    tools:["UIKit","UIViewController"],notes:"Hiring signal: older codebases still rely on UIKit."},
+
+  {id:"y16-concurrency",year:16,title:"Swift Concurrency (async/await, actors)",category:"Swift",
+    details:"Master structured concurrency for clean async code.",
+    links:[{label:"Apple — Concurrency",url:"https://developer.apple.com/documentation/swift/concurrency"}],
+    tools:["async/await","Task","Actor"],notes:"Hiring signal: modern idiomatic Swift."},
+
+  {id:"y16-combine",year:16,title:"Combine essentials (streams & publishers)",category:"Swift",
+    details:"Understand reactive patterns, pipelines, and backpressure basics.",
+    links:[{label:"Apple — Combine",url:"https://developer.apple.com/documentation/combine"}],
+    tools:["Publisher","Subscriber","AnyCancellable"],notes:"Useful for legacy reactive codebases."},
+
+  {id:"y16-networking-json",year:16,title:"Networking: URLSession + Codable + errors",category:"Networking",
+    details:"REST calls, decoding, retry/backoff, and error surfacing.",
+    links:[{label:"Apple — URLSession",url:"https://developer.apple.com/documentation/foundation/urlsession"}],
+    tools:["Postman/Insomnia"],notes:"Hiring signal: clean API integration & resilience."},
+
+  {id:"y16-persistence-coredata",year:16,title:"Persistence: Core Data",category:"Storage",
+    details:"Models, contexts, fetch requests, and syncing with remote state.",
+    links:[{label:"Apple — Core Data",url:"https://developer.apple.com/documentation/coredata"}],
+    tools:["NSPersistentContainer"],notes:"Hiring signal: offline-ready & performance awareness."},
+
+  {id:"y16-apple-apis",year:16,title:"Apple APIs: MapKit + MusicKit",category:"iOS APIs",
+    details:"Polished integrations that feel native and fluid.",
+    links:[{label:"Apple — MapKit",url:"https://developer.apple.com/documentation/mapkit"},
+           {label:"Apple — MusicKit",url:"https://developer.apple.com/musickit/"}],
+    tools:["MKMapView","MusicCatalog"],notes:"Add skeleton states & graceful error UI."},
+
+  {id:"y16-accessibility",year:16,title:"Accessibility & Dynamic Type",category:"UX",
+    details:"VoiceOver, labels, traits, contrast — non-negotiable for quality apps.",
+    links:[{label:"Apple — Accessibility",url:"https://developer.apple.com/accessibility/"}],
+    tools:["VoiceOver","Dynamic Type"],notes:"Hiring signal: craft & empathy."},
+
+  {id:"y16-hig",year:16,title:"Human Interface Guidelines (HIG)",category:"Design",
+    details:"Layout, motion, hierarchy, and platform idioms.",
+    links:[{label:"Apple — HIG",url:"https://developer.apple.com/design/human-interface-guidelines/"}],
+    tools:["Spacing","Alignment","Hierarchy"],notes:"Screens should feel ‘Apple-native’."},
+
+  {id:"y16-animations",year:16,title:"Micro-interactions & animations (SwiftUI)",category:"Polish",
+    details:"MatchedGeometryEffect, spring curves, subtle transitions.",
+    links:[{label:"Apple — Animations in SwiftUI",url:"https://developer.apple.com/tutorials/swiftui/animating-views-and-transitions"}],
+    tools:["withAnimation","spring"],notes:"Use restraint; prefer 200–300ms, ease curves."},
+
+  {id:"y16-git-pro",year:16,title:"Git Pro: branching, PRs, Conventional Commits",category:"Craft",
+    details:"Feature branches, code reviews, and readable history.",
+    links:[{label:"Git Book",url:"https://git-scm.com/book/en/v2"},
+           {label:"Conventional Commits",url:"https://www.conventionalcommits.org/en/v1.0.0/"}],
+    tools:["GitHub","PRs"],notes:"Hiring signal: teamwork & maintainability."},
+
+  {id:"y16-portfolio",year:16,title:"Monochrome portfolio site (fast, minimal)",category:"Portfolio",
+    details:"One-page site with projects, screenshots, and contact.",
+    links:[{label:"GitHub Pages",url:"https://pages.github.com/"},
+           {label:"Netlify",url:"https://www.netlify.com/"}],
+    tools:["HTML/CSS/JS"],notes:"Inline images, lighthouse 95+ score."},
+
+  {id:"y16-firebase-core",year:16,title:"Firebase: Auth, Firestore, Storage, Functions",category:"Backend",
+    details:"End-to-end BaaS with security rules & offline cache.",
+    links:[{label:"Firebase iOS setup",url:"https://firebase.google.com/docs/ios/setup"},
+           {label:"Firestore Rules",url:"https://firebase.google.com/docs/firestore/security/get-started"}],
+    tools:["Firebase Console","Firestore"],notes:"Hiring signal: shipping full-stack quickly."},
+
+  {id:"y16-fb-crashlytics",year:16,title:"Crashlytics & Analytics (basic)",category:"Quality",
+    details:"Capture crashes & events to guide improvements.",
+    links:[{label:"Firebase Crashlytics",url:"https://firebase.google.com/docs/crashlytics"},
+           {label:"Firebase Analytics",url:"https://firebase.google.com/docs/analytics"}],
+    tools:["Crash-free sessions"],notes:"Add anonymized metrics; respect privacy."},
+
+  {id:"y16-instruments",year:16,title:"Instruments: Time Profiler & Leaks",category:"Performance",
+    details:"Profile slow paths, fix retain cycles, reduce jank.",
+    links:[{label:"Xcode Instruments",url:"https://developer.apple.com/documentation/xcode/improving-your-apps-performance"}],
+    tools:["Time Profiler","Allocations","Leaks"],notes:"Hiring signal: performance literacy."},
+
+  {id:"y16-sfsymbols",year:16,title:"SF Symbols + Typography",category:"Design",
+    details:"Use SF Symbols consistently with correct weights.",
+    links:[{label:"SF Symbols",url:"https://developer.apple.com/sf-symbols/"}],
+    tools:["Font metrics","Dynamic Type"],notes:"Avoid custom icon chaos."},
+
+  {id:"y16-security-keychain",year:16,title:"Keychain & Secrets",category:"Security",
+    details:"Store tokens securely; never hard-code secrets.",
+    links:[{label:"Apple — Keychain",url:"https://developer.apple.com/documentation/security/keychain_services"}],
+    tools:["Keychain"],notes:"Hiring signal: security awareness early."},
+
+  {id:"y16-side-project-1",year:16,title:"Side Project: Simple social feed (SwiftUI + Firebase)",category:"Project",
+    details:"Auth, create/read posts, likes, pagination, report abuse.",
+    links:[{label:"Firestore data modeling",url:"https://firebase.google.com/docs/firestore/data-model"}],
+    tools:["Auth","Firestore"],notes:"Focus on clean moderation flows."},
+
+  {id:"y16-side-project-2",year:16,title:"Side Project: Map-based utility (MapKit)",category:"Project",
+    details:"Pins, search, details, favorites, offline tiles optional.",
+    links:[{label:"MapKit overlays/annotations",url:"https://developer.apple.com/documentation/mapkit"}],
+    tools:["MKAnnotation"],notes:"Hiring signal: end-to-end small utility."},
+
+  /* =========================
+     YEAR 17 — Go Professional
+     ========================= */
+  {id:"y17-appstore-ship",year:17,title:"Ship an App Store app (TestFlight → Release)",category:"Shipping",
+    details:"Privacy nutrition, screenshots, review notes, and staged rollout.",
+    links:[{label:"App Store Connect",url:"https://developer.apple.com/support/app-store/"},
+           {label:"TestFlight",url:"https://developer.apple.com/testflight/"},
+           {label:"App Review Guidelines",url:"https://developer.apple.com/app-store/review/guidelines/"}],
+    tools:["Xcode Organizer","App Store Connect"],notes:"Hiring signal: proof you can deliver."},
+
+  {id:"y17-node-express-mongo",year:17,title:"Node.js + Express + MongoDB (full REST API)",category:"Backend",
+    details:"Auth (JWT), CRUD, pagination, rate limiting, logging.",
+    links:[{label:"Node.js",url:"https://nodejs.org/en"},
+           {label:"Express",url:"https://expressjs.com/"},
+           {label:"MongoDB University M001",url:"https://learn.mongodb.com/"},
+           {label:"MongoDB Compass",url:"https://www.mongodb.com/products/compass"}],
+    tools:["VS Code","Postman/Insomnia"],notes:"Deploy on Render/Fly.io/Railway; use environment vars."},
+
+  {id:"y17-deploy-hosting",year:17,title:"Backend Deploy: Render / Fly.io / Railway",category:"DevOps",
+    details:"Set up CI/CD, health checks, logs, and zero-downtime deploys.",
+    links:[{label:"Render",url:"https://render.com/"},
+           {label:"Fly.io",url:"https://fly.io/"},
+           {label:"Railway",url:"https://railway.app/"}],
+    tools:["Docker (optional)","Procfile"],notes:"Hiring signal: operations awareness."},
+
+  {id:"y17-vapor-swift-server",year:17,title:"Alternative: Vapor (Swift server)",category:"Backend",
+    details:"Routes, controllers, Fluent ORM, JWT auth.",
+    links:[{label:"Vapor Docs",url:"https://docs.vapor.codes/"},
+           {label:"Vapor Template",url:"https://github.com/vapor/template"}],
+    tools:["SwiftNIO","Fluent"],notes:"One endpoint consumed by your iOS app."},
+
+  {id:"y17-api-security",year:17,title:"API Security: JWT, rate limiting, input validation",category:"Security",
+    details:"Limit abuse, validate payloads, secure cookies/tokens.",
+    links:[{label:"JWT — Introduction",url:"https://jwt.io/"}],
+    tools:["Zod/Joi (Node)","Middleware"],notes:"Hiring signal: production readiness."},
+
+  {id:"y17-architecture-mvvm",year:17,title:"Architecture: MVVM + Coordinators",category:"Architecture",
+    details:"Separation of concerns, dependency injection, testability.",
+    links:[{label:"Apple — MVC/MVVM concepts",url:"https://developer.apple.com/documentation"},
+           {label:"Coordinator pattern (overview)",url:"https://khanlou.com/2015/10/coordinators-redux/"}],
+    tools:["Protocols","DI"],notes:"Optional: explore TCA later."},
+
+  {id:"y17-testing-xctest",year:17,title:"Unit & UI Tests (XCTest/XCUITest)",category:"Quality",
+    details:"Coverage for models & networking; basic UI happy-path.",
+    links:[{label:"Apple — XCTest",url:"https://developer.apple.com/documentation/xctest"}],
+    tools:["XCTest","XCUITest"],notes:"Hiring signal: reliability & safety net."},
+
+  {id:"y17-snapshot-testing",year:17,title:"Snapshot Testing",category:"Quality",
+    details:"Catch accidental UI regressions in components & screens.",
+    links:[{label:"SnapshotTesting (Point-Free)",url:"https://github.com/pointfreeco/swift-snapshot-testing"}],
+    tools:["Reference images"],notes:"Great for design-heavy apps."},
+
+  {id:"y17-ci-github-actions",year:17,title:"CI: GitHub Actions for iOS",category:"DevOps",
+    details:"Build & test on PR, lint, artifact builds.",
+    links:[{label:"GitHub Actions",url:"https://docs.github.com/actions"}],
+    tools:["actions/checkout","xcpretty"],notes:"Optional: add test matrix."},
+
+  {id:"y17-fastlane",year:17,title:"Fastlane (optional) for screenshots & deploy",category:"DevOps",
+    details:"Automate screenshots, TestFlight uploads, metadata.",
+    links:[{label:"Fastlane Docs",url:"https://docs.fastlane.tools/"}],
+    tools:["match","deliver","snapshot"],notes:"Time-saver for releases."},
+
+  {id:"y17-open-source",year:17,title:"Open Source: contribute monthly",category:"Community",
+    details:"Docs, tests, fixes to popular Swift repos.",
+    links:[{label:"Alamofire",url:"https://github.com/Alamofire/Alamofire"},
+           {label:"SwiftLint",url:"https://github.com/realm/SwiftLint"},
+           {label:"Kingfisher",url:"https://github.com/onevcat/Kingfisher"},
+           {label:"Vapor",url:"https://github.com/vapor/vapor"}],
+    tools:["PRs","Issues"],notes:"Hiring signal: code in the open."},
+
+  {id:"y17-hackathon",year:17,title:"Ship a hackathon project in 48 hrs",category:"Experience",
+    details:"Scoping, MVP, pitching, and teamwork under pressure.",
+    links:[{label:"Devpost",url:"https://devpost.com/"}],
+    tools:["GitHub","Figma"],notes:"Hiring signal: bias to action."},
+
+  {id:"y17-freelance",year:17,title:"Freelance/Client project (paid or nonprofit)",category:"Experience",
+    details:"Real stakeholder, scoping, deadlines, handoff.",
+    links:[{label:"Upwork (freelance)",url:"https://www.upwork.com/"}],
+    tools:["Contracts","Invoices"],notes:"One shipped engagement = gold."},
+
+  {id:"y17-wwdc-ssc",year:17,title:"WWDC Swift Student Challenge",category:"Apple",
+    details:"Interactive Playgrounds experience with a teaching angle.",
+    links:[{label:"Swift Student Challenge",url:"https://developer.apple.com/wwdc24/swift-student-challenge/"},
+           {label:"Swift Playgrounds",url:"https://www.apple.com/swift/playgrounds/"}],
+    tools:["Playgrounds"],notes:"Hiring signal: Apple ecosystem passion."},
+
+  {id:"y17-linkedin-portfolio",year:17,title:"LinkedIn + Portfolio refresh (case studies)",category:"Career",
+    details:"Short stories: problem → approach → impact (+ screenshots).",
+    links:[{label:"Apple HIG (again for visuals)",url:"https://developer.apple.com/design/human-interface-guidelines/"}],
+    tools:["Before/After visuals"],notes:"Hiring signal: communication skills."},
+
+  {id:"y17-blog-devlog",year:17,title:"Monthly Devlog / Blog post",category:"Brand",
+    details:"Teach something you solved; add code snippets & gifs.",
+    links:[{label:"Dev.to",url:"https://dev.to/"}],
+    tools:["Markdown"],notes:"Hiring signal: clarity & generosity."},
+
+  {id:"y17-privacy-att",year:17,title:"Privacy & ATT dialog (if tracking)",category:"Compliance",
+    details:"Know when ATT is needed; minimize data collection.",
+    links:[{label:"Apple — App Tracking Transparency",url:"https://developer.apple.com/app-store/user-privacy-and-data-use/"}],
+    tools:["ATT","Privacy labels"],notes:"Avoid rejection; build user trust."},
+
+  {id:"y17-notifications",year:17,title:"Push Notifications (APNs + FCM)",category:"iOS APIs",
+    details:"Token registration, topics, deep links, actionable notifications.",
+    links:[{label:"Apple — APNs",url:"https://developer.apple.com/documentation/usernotifications/"},
+           {label:"Firebase Cloud Messaging",url:"https://firebase.google.com/docs/cloud-messaging"}],
+    tools:["UNUserNotificationCenter"],notes:"Respect quiet hours & user control."},
+
+  {id:"y17-inapp-purchase",year:17,title:"In-App Purchases / Subscriptions (StoreKit 2)",category:"Monetization",
+    details:"Entitlements, receipts, restore purchases, intro offers.",
+    links:[{label:"Apple — StoreKit",url:"https://developer.apple.com/documentation/storekit"}],
+    tools:["StoreKit 2"],notes:"Hiring signal: product thinking."},
+
+  {id:"y17-localization",year:17,title:"Localization (at least EN + ES)",category:"Quality",
+    details:"String catalogs, RTL awareness, flexible layouts.",
+    links:[{label:"Apple — Localization",url:"https://developer.apple.com/localization/"}],
+    tools:["String Catalogs"],notes:"Small lift → bigger audience."},
+
+  {id:"y17-logging-metrics",year:17,title:"Observability: logs, metrics, tracing (basic)",category:"Quality",
+    details:"Add structured logs and key app metrics.",
+    links:[{label:"OSLog / Unified Logging",url:"https://developer.apple.com/documentation/os/logging"}],
+    tools:["os_log"],notes:"Helps debug production issues fast."},
+
+  {id:"y17-qa-playbook",year:17,title:"QA Playbook: test plan & release checklist",category:"Craft",
+    details:"Manual test matrix + smoke test script for each release.",
+    links:[{label:"Apple — Test Plans",url:"https://developer.apple.com/documentation/xcode/creating-test-plans"}],
+    tools:["Test Plans"],notes:"Prevent avoidable regressions."},
+
+  {id:"y17-system-design-lite",year:17,title:"System Design (mobile-scale) fundamentals",category:"Interview Prep",
+    details:"Data flow, sync strategies, caching, pagination, retries.",
+    links:[{label:"Primer: Mobile system design (overview)",url:"https://www.linkedin.com/pulse/mobile-system-design-interview-cheatsheet/"}],
+    tools:["Sequence diagrams"],notes:"Explainable mental models > buzzwords."},
+
+  {id:"y17-leetcode-75",year:17,title:"LeetCode: Top 75 (Easy/Medium)",category:"Interview Prep",
+    details:"Target foundational patterns for screens.",
+    links:[{label:"LeetCode Top 75",url:"https://leetcode.com/problem-list/top-75/"}],
+    tools:["Daily challenge habit"],notes:"Track time & space complexity."},
+
+  /* =========================
+     YEAR 18 — Launch & Apply
+     ========================= */
+  {id:"y18-flagship",year:18,title:"Flagship App: end-to-end polish & real users",category:"Capstone",
+    details:"Offline-first, robust error states, delightful animations.",
+    links:[{label:"Apple — App Architecture (overview)",url:"https://developer.apple.com/documentation/"}],
+    tools:["SwiftUI","Concurrency","Backend"],notes:"Hiring signal: product ownership."},
+
+  {id:"y18-referrals",year:18,title:"Referral Outreach (20+ targeted messages)",category:"Career",
+    details:"Short, respectful notes to engineers/alumni with portfolio link.",
+    links:[{label:"LinkedIn",url:"https://www.linkedin.com/"}],
+    tools:["Message templates"],notes:"Referrals 2–5× interview chance."},
+
+  {id:"y18-resume",year:18,title:"Resume: impact bullets + links",category:"Career",
+    details:"Action verb + what + impact (numbers). Link GitHub/App Store.",
+    links:[{label:"Resume tips (concise)",url:"https://www.sequoiacap.com/article/writing-a-resume-that-works/"}],
+    tools:["PDF export"],notes:"One page. No fluff. Proof via links."},
+
+  {id:"y18-apply-broad",year:18,title:"Applications: Apple / Meta / Amazon (+ startups)",category:"Career",
+    details:"Tailor bullets to JD; show relevant tech stack & shipped work.",
+    links:[{label:"Apple Jobs",url:"https://jobs.apple.com/"},
+           {label:"Meta Careers",url:"https://www.metacareers.com/"},
+           {label:"Amazon Jobs",url:"https://www.amazon.jobs/"}],
+    tools:["Cover letter (short)"],notes:"Apply to 20–50 roles. Track responses."},
+
+  {id:"y18-onsite-prep",year:18,title:"Onsite/Virtual Loop Prep",category:"Interview Prep",
+    details:"Whiteboard comfort, app architecture discussion, product sense.",
+    links:[{label:"Apple — HIG (review)",url:"https://developer.apple.com/design/human-interface-guidelines/"}],
+    tools:["Mock loops"],notes:"Practice with peers; record & review."},
+
+  {id:"y18-performance-deep",year:18,title:"Performance deep-dive with Instruments",category:"Performance",
+    details:"Fix top 3 slow paths; tune scrolling & memory spikes.",
+    links:[{label:"Instruments — Time Profiler",url:"https://developer.apple.com/documentation/xcode/improving-your-apps-performance"}],
+    tools:["Signposts","Metrics"],notes:"Attach numbers in release notes."},
+
+  {id:"y18-security-review",year:18,title:"Security Review: Keychain, ATS, sensitive data",category:"Security",
+    details:"Check ATS, secure transport, and least-privilege access.",
+    links:[{label:"App Transport Security",url:"https://developer.apple.com/documentation/bundleresources/information_property_list/nsapptransportsecurity"}],
+    tools:["Keychain","ATS"],notes:"No secrets in repo. Rotate tokens."},
+
+  {id:"y18-telemetry",year:18,title:"Metrics & Funnels: activation → retention",category:"Product",
+    details:"Define core events; compute conversion rates.",
+    links:[{label:"Firebase Analytics",url:"https://firebase.google.com/docs/analytics"}],
+    tools:["Event schema"],notes:"Hiring signal: data-informed iteration."},
+
+  {id:"y18-bug-bash",year:18,title:"Bug Bash & Polish Week",category:"Quality",
+    details:"Fix papercuts, empty states, copy tone, haptics, and loading.",
+    links:[{label:"Human Interface Guidelines — Motion & Feedback",url:"https://developer.apple.com/design/human-interface-guidelines/foundations/feedback/"}],
+    tools:["Checklists"],notes:"Before recruiters test the app."},
+
+  {id:"y18-dry-run-interviews",year:18,title:"Dry-run interviews (3x) with seniors",category:"Interview Prep",
+    details:"1 iOS round, 1 DSA round, 1 behavioral/product sense.",
+    links:[{label:"Interviewing.io (practice)",url:"https://interviewing.io/"}],
+    tools:["Recording & notes"],notes:"Iterate on weak spots fast."},
+
+  {id:"y18-docs-readme",year:18,title:"Docs: README + Architecture.md + ADRs",category:"Craft",
+    details:"Explain decisions, tradeoffs, and how to run the project.",
+    links:[{label:"Keep a Changelog",url:"https://keepachangelog.com/en/1.1.0/"}],
+    tools:["ADR template"],notes:"Hiring signal: senior-style communication."},
+
+  {id:"y18-code-health",year:18,title:"Refactor: dead code, lint/format, module boundaries",category:"Craft",
+    details:"SwiftLint + SwiftFormat, remove tech debt, smaller files.",
+    links:[{label:"SwiftLint",url:"https://github.com/realm/SwiftLint"},
+           {label:"SwiftFormat",url:"https://github.com/nicklockwood/SwiftFormat"}],
+    tools:["Lint CI"],notes:"Leave code better than you found it."},
+
+  {id:"y18-marketing-site",year:18,title:"Marketing site + press kit (black/white)",category:"Portfolio",
+    details:"Logo, screenshots, features, privacy, support email.",
+    links:[{label:"Netlify (deploy)",url:"https://www.netlify.com/"}],
+    tools:["Meta tags","OG images"],notes:"Looks legit to recruiters."},
+
+  {id:"y18-dsa-50medium",year:18,title:"LeetCode: 50 Mediums (timed)",category:"Interview Prep",
+    details:"Trees, graphs, DP; review patterns & explain solutions.",
+    links:[{label:"LeetCode Medium set",url:"https://leetcode.com/problemset/all/?difficulty=MEDIUM"}],
+    tools:["Timer"],notes:"Confidence under time pressure."},
+
+  {id:"y18-offers-followups",year:18,title:"Follow-ups & Negotiation Basics",category:"Career",
+    details:"Thank-yous, clarifying timelines, and understanding levels.",
+    links:[{label:"Levels.fyi (calibration)",url:"https://www.levels.fyi/"}],
+    tools:["Email drafts"],notes:"Be polite, concise, and clear."}
+];
+
+/* ---- Add more granular, high-signal sub-tasks (still black/white) ---- */
+/* Year 16 extras */
+[
+  ["y16-json-error-states",16,"Error States & Retries (Networking)","Networking",
+   "Centralize error handling; backoff + retry; user-friendly messages.",
+   [{label:"URLSession guide",url:"https://developer.apple.com/documentation/foundation/urlsession"}],
+   ["Result types","Retry"],"Hiring signal: robust UX when things fail."],
+  ["y16-offline-cache",16,"Offline Cache Strategy","Storage",
+   "Design for intermittent connectivity; merge strategies.",
+   [{label:"Core Data + Cloud sync (overview)",url:"https://developer.apple.com/documentation/coredata"}],
+   ["NSPersistentContainer"],"Avoid data loss & jank."],
+  ["y16-logging-basics",16,"Unified Logging (os_log)","Quality",
+   "Use categories & privacy markers in logs.",
+   [{label:"OSLog",url:"https://developer.apple.com/documentation/os/logging"}],
+   ["os_log"],"Make logs actionable."],
+  ["y16-design-systems",16,"Design System: spacing, type scale, components","Design",
+   "Consistent spacing scale, text styles, and reusable components.",
+   [{label:"HIG — Layout & Typography",url:"https://developer.apple.com/design/human-interface-guidelines/"}],
+   ["Tokens"],"Screens look coherent & premium."],
+  ["y16-keychain-wrapper",16,"Keychain wrapper utility","Security",
+   "Small, tested helper for saving/retrieving tokens.",
+   [{label:"Keychain Services",url:"https://developer.apple.com/documentation/security/keychain_services"}],
+   ["Unit tests"],"Security without repetition."]
+].forEach(([id,year,title,category,details,links,tools,notes])=>{
+  ROADMAP.push({id,year,title,category,details,links,tools,notes});
+});
+
+/* Year 17 extras */
+[
+  ["y17-telemetry-dashboard",17,"Build a private metrics dashboard","Product",
+   "Track DAU/WAU, crashes, funnel conversion (local or hosted).",
+   [{label:"Firebase Analytics (events)",url:"https://firebase.google.com/docs/analytics"}],
+   ["Charts"],"Numbers drive decisions."],
+  ["y17-a11y-audit",17,"Accessibility Audit + fixes","UX",
+   "Run through VoiceOver; fix contrast & hit targets.",
+   [{label:"Apple Accessibility",url:"https://developer.apple.com/accessibility/"}],
+   ["Checklist"],"Respect all users."],
+  ["y17-beta-program",17,"Recruit 20 TestFlight beta users","Shipping",
+   "Collect qualitative feedback & crash reports; iterate weekly.",
+   [{label:"TestFlight",url:"https://developer.apple.com/testflight/"}],
+   ["Feedback form"],"Hiring signal: feedback loop."],
+  ["y17-logging-structure",17,"Log structure & redaction policy","Security",
+   "No PII in logs; redact tokens; consistent fields.",
+   [{label:"Logging privacy",url:"https://developer.apple.com/documentation/os/logging"}],
+   ["Policy doc"],"Production safety."],
+  ["y17-api-docs",17,"API Docs (OpenAPI/Swagger)","Backend",
+   "Self-documenting endpoints & schemas.",
+   [{label:"OpenAPI Spec",url:"https://www.openapis.org/"}],
+   ["Swagger UI"],"Easier integration & testing."],
+  ["y17-queue-background",17,"Background tasks & queues","iOS APIs",
+   "Use BGTaskScheduler or URLSession background transfers.",
+   [{label:"Background Tasks",url:"https://developer.apple.com/documentation/backgroundtasks"}],
+   ["BGAppRefreshTask"],"Long-running work without blocking UI."],
+  ["y17-image-pipeline",17,"Image pipeline (cache, prefetch)","Performance",
+   "Use Kingfisher/Nuke; placeholders, prefetch, cancel on scroll.",
+   [{label:"Kingfisher",url:"https://github.com/onevcat/Kingfisher"},
+    {label:"Nuke",url:"https://github.com/kean/Nuke"}],
+   ["Memory vs disk cache"],"Smooth scrolling & lower data use."],
+  ["y17-ci-static-analysis",17,"Static analysis & lint in CI","DevOps",
+   "SwiftLint rules & SwiftFormat; fail on warnings.",
+   [{label:"SwiftLint",url:"https://github.com/realm/SwiftLint"},
+    {label:"SwiftFormat",url:"https://github.com/nicklockwood/SwiftFormat"}],
+   ["GitHub Actions"],"High code quality signal."]
+].forEach(([id,year,title,category,details,links,tools,notes])=>{
+  ROADMAP.push({id,year,title,category,details,links,tools,notes});
+});
+
+/* Year 18 extras */
+[
+  ["y18-datasheet",18,"Feature Datasheet (one-pagers)","Product",
+   "For each core feature: problem, design, metrics, risks, rollout.",
+   [{label:"PRD primer",url:"https://www.atlassian.com/agile/product-management/product-requirements"}],
+   ["One-pagers"],"Speak PM/lead language."],
+  ["y18-rollout-plan",18,"Rollout plan: staged + kill switches","Quality",
+   "Use server flags for rollout; add rollback strategy.",
+   [{label:"Remote config (Firebase)",url:"https://firebase.google.com/docs/remote-config"}],
+   ["Feature flags"],"Safer launches."],
+  ["y18-privacy-policy",18,"Privacy Policy + Terms (basic)","Compliance",
+   "Plain-English docs published on your site.",
+   [{label:"Policy generator (reference)",url:"https://www.termsfeed.com/blog/sample-privacy-policy-template/"}],
+   ["Links in app"],"App Review-friendly."],
+  ["y18-cold-email",18,"Targeted cold emails (15 companies)","Career",
+   "Short pitch + portfolio link; ask for 15-min chat/referral.",
+   [{label:"LinkedIn",url:"https://www.linkedin.com/"}],
+   ["Tracker"],"Creates opportunities."],
+  ["y18-postmortem",18,"Postmortem habit (blameless)","Craft",
+   "After incidents: what happened, root cause, next steps.",
+   [{label:"Incident postmortems (overview)",url:"https://sre.google/sre-book/postmortem-culture/"}],
+   ["Template"],"Maturity signal to hiring managers."]
+].forEach(([id,year,title,category,details,links,tools,notes])=>{
+  ROADMAP.push({id,year,title,category,details,links,tools,notes});
+});
+
+/* -------------------------------------------
+   State & UI
+-------------------------------------------- */
+const els = {
+  cards: document.getElementById('cards'),
+  tabs:  Array.from(document.querySelectorAll('.tab')),
+  fill:  document.getElementById('progressFill'),
+  percent: document.getElementById('progressPercent'),
+  search: document.getElementById('search'),
+  clearSearch: document.getElementById('clearSearch'),
+  expandAll: document.getElementById('expandAllBtn'),
+  reset: document.getElementById('resetBtn'),
+  saveStatus: document.getElementById('saveStatus'),
+};
+
+const KEY = "journey.pro.progress.v1";
+let state = loadState();
+let activeYear = 16;
+let expandAll = false;
+let query = "";
+
+/* LocalStorage */
+function loadState(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(!raw) return {};
+    return JSON.parse(raw) || {};
+  }catch(e){ return {}; }
+}
+function saveState(){
+  localStorage.setItem(KEY, JSON.stringify(state));
+  flashSaved();
+}
+function flashSaved(){
+  els.saveStatus.textContent = "Saved locally";
+  els.saveStatus.classList.remove('slideIn'); void els.saveStatus.offsetWidth;
+  els.saveStatus.classList.add('slideIn');
+}
+
+/* Progress */
+function computeProgress(filteredIds=null){
+  const ids = (filteredIds || ROADMAP.map(t=>t.id));
+  const done = ids.filter(id => state[id] === true).length;
+  const pct  = ids.length ? Math.round((done / ids.length) * 100) : 0;
+  els.fill.style.width = pct + "%";
+  els.fill.classList.add('pulse');
+  setTimeout(()=>els.fill.classList.remove('pulse'), 400);
+  els.percent.textContent = pct + "%";
+}
+
+/* Filtering */
+function matchesQuery(task, q){
+  if(!q) return true;
+  const hay = (task.title+" "+task.category+" "+(task.details||"")+" "+(task.tools||[]).join(" ")+" "+(task.notes||"")).toLowerCase();
+  return hay.includes(q.toLowerCase());
+}
+function visibleTasks(){
+  return ROADMAP.filter(t =>
+    (activeYear === "all" ? true : t.year === activeYear) &&
+    matchesQuery(t, query)
+  );
+}
+
+/* Render */
+function render(){
+  const tasks = visibleTasks();
+  els.cards.innerHTML = "";
+  const frag = document.createDocumentFragment();
+  tasks.forEach(task=>{
+    const card = document.createElement('div');
+    card.className = "card";
+    card.setAttribute("data-id", task.id);
+
+    const check = document.createElement('button');
+    check.className = "check";
+    check.setAttribute("aria-label", "Mark complete");
+    check.dataset.checked = !!state[task.id];
+    check.innerHTML = state[task.id] ? "✓" : "";
+    check.addEventListener('click', ()=>{
+      const now = !state[task.id];
+      state[task.id] = now;
+      check.dataset.checked = now;
+      check.innerHTML = now ? "✓" : "";
+      saveState();
+      computeProgress(visibleTasks().map(t=>t.id));
+    });
+
+    const meta = document.createElement('div');
+    meta.className = "meta";
+    const label = document.createElement('div');
+    label.className = "label";
+    label.textContent = task.title;
+    const sub = document.createElement('div');
+    sub.className = "sub";
+    sub.textContent = `${task.category} • Year ${task.year}`;
+    meta.appendChild(label); meta.appendChild(sub);
+
+    const pill = document.createElement('div');
+    pill.className = "pill";
+    pill.textContent = "Details";
+
+    const more = document.createElement('div');
+    more.className = "more";
+    more.innerHTML = `
+      <div style="color:#e9e9e9">${task.details || ""}</div>
+      ${task.tools?.length ? `<div style="margin-top:8px; color:#cfcfcf; font-size:12px">Tools/Programs: ${task.tools.join(", ")}</div>`:""}
+      ${task.notes ? `<div style="margin-top:8px; color:#cfcfcf; font-size:12px">Notes: ${task.notes}</div>`:""}
+      ${task.links?.length ? `<div class="links">${task.links.map(l=>`<a class="link" href="${l.url}" target="_blank" rel="noopener noreferrer">${l.label}</a>`).join("")}</div>`:""}
+    `;
+    if(expandAll) more.style.display = "block";
+
+    pill.addEventListener('click', ()=>{
+      const show = more.style.display !== "block";
+      more.style.display = show ? "block" : "none";
+    });
+
+    card.appendChild(check);
+    card.appendChild(meta);
+    card.appendChild(pill);
+    card.appendChild(more);
+    frag.appendChild(card);
+  });
+  els.cards.appendChild(frag);
+  computeProgress(tasks.map(t=>t.id));
+}
+
+/* Events */
+els.tabs.forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    els.tabs.forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    activeYear = tab.dataset.year === "all" ? "all" : parseInt(tab.dataset.year,10);
+    render();
+  });
+  tab.addEventListener('keydown', (e)=>{
+    if(e.key === "Enter" || e.key === " "){ e.preventDefault(); tab.click(); }
+  });
+});
+
+els.search.addEventListener('input', ()=>{
+  query = els.search.value.trim();
+  render();
+});
+els.clearSearch.addEventListener('click', ()=>{
+  els.search.value = "";
+  query = "";
+  render();
+});
+
+els.expandAll.addEventListener('click', ()=>{
+  expandAll = !expandAll;
+  els.expandAll.textContent = expandAll ? "Collapse all" : "Expand all";
+  render();
+});
+
+els.reset.addEventListener('click', ()=>{
+  if(confirm("Reset all local progress?")){
+    state = {};
+    saveState();
+    render();
+  }
+});
+
+/* Initial render */
+render();
+
+/* Reduce motion respect */
+if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  document.documentElement.style.setProperty('--speed','0ms');
+}
+</script>
+</body>
+</html>
