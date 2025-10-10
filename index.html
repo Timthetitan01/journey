@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="icon" href="JourneyLogo.png" type="image/svg+xml">
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Journey Pro — Roadmap (Full-bleed)</title>
@@ -40,11 +41,24 @@
   }
   header.app .inner{max-width:1100px;margin:0 auto;padding:18px}
   .brand{display:flex;align-items:center;gap:14px;user-select:none;animation:fadeIn .8s var(--ease) both}
-  .logo{width:34px;height:34px;border-radius:12px;background:linear-gradient(145deg,#121212,#0c0c0c);
-        box-shadow:0 0 0 1px var(--line) inset,0 12px 30px rgba(0,0,0,.6);position:relative;overflow:hidden}
-  .logo::before{content:"";position:absolute;inset:0;
-    background:linear-gradient(180deg,rgba(255,255,255,.08),transparent 40%),radial-gradient(120px 22px at 50% -10%,rgba(255,255,255,.25),rgba(255,255,255,0));
-    mix-blend-mode:screen}
+  .logo {
+    width: 34px;
+    height: 34px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px var(--line) inset, 0 12px 30px rgba(0,0,0,.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none; /* remove gradient */
+  }
+
+  .logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
   .title{font-weight:650;font-size:18px;letter-spacing:.3px}
   .subtitle{color:var(--muted);font-size:12px}
 
@@ -149,10 +163,12 @@
 <header class="app">
   <div class="inner">
     <div class="brand">
-      <div class="logo" aria-hidden="true"></div>
+        <div class="logo">
+          <img src="JourneyLogo.png" alt="Journey Logo">
+        </div>
       <div>
         <div class="title">Journey Pro</div>
-        <div class="subtitle">Black-and-white roadmap to a hire-ready full-stack Swift role by 18</div>
+        <div class="subtitle">Black-and-white roadmap to a hire-ready full-stack Swift role</div>
       </div>
     </div>
 
